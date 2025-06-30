@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Makeup Artist Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #fffafc;
+      color: #333;
+    }
+
+    .header {
+      height: 100vh;
+      position: relative;
+      color: white;
+      overflow: hidden;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .about-section {
+      padding: 60px 20px;
+      background-color: #fff0f5;
+    }
+
+    .about-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .about-image img {
+      width: 300px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-text {
+      max-width: 600px;
+    }
+
+    .about-text h2, .about-text h3 {
+      color: #d63384;
+      margin-bottom: 10px;
+    }
+
+    .about-text h3 i, .about-text h2 i {
+      color: #555;
+      margin-right: 10px;
+    }
+
+    .about-text ul {
+      padding-left: 20px;
+    }
+
+    .about-text li::marker {
+      color: #d63384;
+    }
+
+    .about-text p {
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .phone {
+      font-weight: bold;
+    }
+
+    .slider {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .slide {
+      display: none;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .slide.active {
+      display: block;
+      animation: fade 1s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero-text {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+    }
+
+    .gallery {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .gallery h2 {
+      margin-bottom: 20px;
+    }
+
+    .images {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .image-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      position: relative;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.5s ease;
+    }
+
+    .image-card .hover-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .image-card:hover .hover-img {
+      opacity: 1;
+    }
+
+    .image-card .desc {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .promo {
+      display: flex;
+      align-items: center;
+      padding: 40px;
+      background-color: #ffe6ec;
+      gap: 30px;
+    }
+
+    .promo img {
+      width: 150px;
+    }
+
+    .promo button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .before-after {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #fff0f5;
+    }
+
+    .transform {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .transform div {
+      max-width: 300px;
+    }
+
+    .transform img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: #111;
+      color: white;
+      padding: 40px 20px;
+    }
+
+    .footer-col {
+      max-width: 250px;
+    }
+
+    .footer-col i {
+      margin-right: 10px;
+    }
+
+    .copyright {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+
+    @media(max-width: 768px) {
+      .promo {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar {
+        flex-direction: column;
+      }
+
+      .about-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-image img {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- content continues... -->
+
+  <header class="header">
+    <div class="slider">
+      <div class="slide active" style="background-image: url('home5.jpg');"></div>
+      <div class="slide" style="background-image: url('home2.jpg');"></div>
+      <div class="slide" style="background-image: url('home4.jpeg');"></div>
+    </div>
+    <nav class="navbar">
+      <div class="logo">Glam by Babita</div>
+      <ul class="nav-links">
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="phone">📞 +91 75002-21405</div>
+    </nav>
+    <div class="hero-text">
+      <h1 id="hero-title">Welcome to Glam by Babita Pandey</h1>
+      <p id="hero-subtitle">Bridal | Party | Editorial | Glam</p>
+    </div>
+  </header>
+
+<section id="about" class="about-section">
+  <div class="about-container">
+    <div class="about-image">
+      <img src="about.jpeg" alt="Babita Pandey">
+    </div>
+    <div class="about-text">
+      <h2><i class="fa fa-user-circle"></i> About Me</h2>
+      <p>Hi, I'm <strong>Babita Pandey</strong>, a passionate and professional makeup artist & hair stylist with 1+ years of experience in bridal, editorial, party, and fantasy makeup. I specialize in enhancing natural beauty with customized looks that match every client’s personality and event style.</p>
+      
+      <p>I’ve worked with photographers, models, and private clients to deliver stunning transformations using techniques in contouring, grooming, and hairstyling.</p>
+
+      <div style="margin-top: 30px;">
+        <h3><i class="fa fa-briefcase"></i> Experience</h3>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+          <li>Freelancer Makeup Artist for bridal, party, editorial, fantasy & prosthetic makeup</li>
+          <li>Collaborated with photographers and models for creative theme-based looks</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h3><i class="fa fa-magic"></i> Skills</h3>
+        <p><strong>Soft Skills:</strong> Communication, Client Assessment, Teamwork, Customer Service, Adaptability</p>
+        <p><strong>Hard Skills:</strong> Product Knowledge, Contouring, Hair Styling, Personal Grooming</p>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h3><i class="fa fa-graduation-cap"></i> Education</h3>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+          <li>B.Sc. – S.S. Jeena University, Almora (UK), 2022</li>
+          <li>12th – UK Board, Almora (2019)</li>
+          <li>10th – UK Board, Almora (2017)</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h3><i class="fa fa-certificate"></i> Certifications</h3>
+        <ul style="margin-left: 20px; line-height: 1.6;">
+          <li>1-year diploma in Cosmetology & Basic Makeup – NSTI Noida</li>
+          <li>Advanced Makeup & Hair Styling – UK International London Beauty School</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <h3><i class="fa fa-language"></i> Languages</h3>
+        <p>Hindi, English</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section id="portfolio" class="gallery">
+    <h2>My Work</h2>
+    <div class="images">
+      <div class="image-card">
+        <img src="makeup-1.jpeg" alt="Bridal Makeup">
+        <img class="hover-img" src="makeup2.jpeg" alt="Bridal Makeup Hover">
+        <div class="desc"><strong>Bridal Makeup:</strong> Classic bridal makeup is all about enhancing the bride's natural beauty while creating a timeless, elegant look</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup3.jpeg" alt="Party Look">
+        <img class="hover-img" src="makeup4.jpeg" alt="Party Look Hover">
+        <div class="desc"><strong>Bridal Makeup:</strong> South Indian bridal makeup is a beautiful blend of tradition and elegance.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup5.jpeg" alt="Before and After">
+        <img class="hover-img" src="makeup6.jpeg" alt="Before and After Hover">
+        <div class="desc"><strong>Pahadi Reception Look:</strong> A graceful fusion of traditional charm and modern elegance, enhancing natural features to perfectly complement the bride's attire.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup7.jpeg" alt="Model Shoot">
+        <img class="hover-img" src="makeup8.jpeg" alt="Model Shoot Hover">
+        <div class="desc"><strong>Creative Makeup:</strong> A glam look with creative eye makeup can be a great way to make a statement and add some extra sparkle to your look!</div>
+      </div>
+    </div>
+
+    <div class="images">
+      <div class="image-card">
+        <img src="makeup10.jpeg" alt="Bridal Makeup">
+        <img class="hover-img" src="makeup9.jpeg" alt="Bridal Makeup Hover">
+        <div class="desc"><strong>Nude Elegance:</strong> A natural, earthy look with soft foundation, nude lips, and light brown eyeshadow—elegant, subtle, and perfect for any occasion.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup11.jpeg" alt="Party Look">
+        <img class="hover-img" src="makeup12.jpeg" alt="Party Look Hover">
+        <div class="desc"><strong>Discription:</strong> The makeup look  created for the Nigerian girl , Her rich, dark skin tone is radiant and glowing, with a subtle sheen that catches the light.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup14.jpeg" alt="Before and After">
+        <img class="hover-img" src="makeup15.jpeg" alt="Before and After Hover">
+        <div class="desc"><strong>Discription:</strong> This makeup look is perfect for a psycho killer character. It's intense, dramatic, and suggests a complete loss of control.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup16.jpeg" alt="Model Shoot">
+        <img class="hover-img" src="makeup17.jpeg" alt="Model Shoot Hover">
+        <div class="desc"><strong>Discription:</strong> The makeup look in this image is a great example of how to create a dramatic and edgy style that's perfect for a fashion photoshoot or a night out on the town.</div>
+      </div>
+    </div>
+
+     <div class="images">
+      <div class="image-card">
+        <img src="makeup19.jpeg" alt="Bridal Makeup">
+        <img class="hover-img" src="makeup18.jpeg" alt="Bridal Makeup Hover">
+        <div class="desc"><strong>Discription:</strong> The makeup look is subtle yet polished, ideal for an office setting. The focus is on enhancing the girl's natural features without looking too done-up.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup20.jpeg" alt="Party Look">
+        <img class="hover-img" src="makeup22.jpeg" alt="Party Look Hover">
+        <div class="desc"><strong>Discription:</strong> The makeup look is elegant, sophisticated, and fitting for a formal occasion or a beauty pageant. The bold red lip color and dark eyeliner add a touch of drama, while the rest of the makeup is understated and natural-looking.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup25.jpeg" alt="Before and After">
+        <img class="hover-img" src="makeup24.jpeg" alt="Before and After Hover">
+        <div class="desc"><strong>Discription:</strong> Candlelit serenity,Soft glow, gentle soul.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup26.jpeg" alt="Model Shoot">
+        <img class="hover-img" src="makeup27.jpeg" alt="Model Shoot Hover">
+        <div class="desc"><strong>Discription:</strong> Sunshine in full bloom.</div>
+      </div>
+    </div>
+
+     <div class="images">
+      <div class="image-card">
+        <img src="makeup28.jpeg" alt="Bridal Makeup">
+        <img class="hover-img" src="makeup29.jpeg" alt="Bridal Makeup Hover">
+        <div class="desc"><strong>Nude Elegance:</strong> A natural, earthy look with soft foundation, nude lips, and light brown eyeshadow—elegant, subtle, and perfect for any occasion.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup31.jpeg" alt="Party Look">
+        <img class="hover-img" src="makeup30.jpeg" alt="Party Look Hover">
+        <div class="desc"><strong>Bridal Makeup:</strong> South Indian bridal makeup is a beautiful blend of tradition and elegance.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup33.jpeg" alt="Before and After">
+        <img class="hover-img" src="makeup35.jpeg" alt="Before and After Hover">
+        <div class="desc"><strong>Discription:</strong> The makeup look is elegant and sophisticated, perfect for a photoshoot or a formal event. It highlights the model's natural beauty while adding a touch of glamour with the bold lip color.</div>
+      </div>
+      <div class="image-card">
+        <img src="makeup36.jpeg" alt="Model Shoot">
+        <img class="hover-img" src="makeup37.jpeg" alt="Model Shoot Hover">
+      </div>
+    </div>
+
+      <div class="images">
+      <div class="image-card">
+        <img src="makeup39.jpeg" alt="Bridal Makeup">
+        <img class="hover-img" src="makeup40.jpeg" alt="Bridal Makeup Hover">
+      </div>
+      <div class="image-card">
+        <img src="makeup42.jpeg" alt="Party Look">
+        <img class="hover-img" src="makeup41.jpeg" alt="Party Look Hover">
+      </div>
+     
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <p>Email: glampriya@example.com</p>
+      <p>Phone: +91 75002-21405</p>
+    </div>
+    <div class="footer-col">
+      <h3>Follow</h3>
+      <i class="fa fa-instagram"></i>
+      <i class="fa fa-facebook"></i>
+      <i class="fa fa-twitter"></i>
+    </div>
+    <div class="footer-col">
+      <h3>Location</h3>
+      <p>Noida sector-15 , U.P, India</p>
+    </div>
+  </footer>
+
+  <section class="copyright">
+    <p>&copy; 2025 aanchal | Designed with ❤️</p>
+  </section>
+
+  <script>
+    function bookNow() {
+      alert("Thank you for booking with Glam by Priya! We'll contact you shortly.");
+    }
+
+    const slides = document.querySelectorAll('.slide');
+    const titles = [
+      "Welcome to Glam by Priya",
+      "Look Your Best on Your Special Day",
+      "Flawless Makeup for Every Occasion"
+    ];
+    const subtitles = [
+      "Bridal | Party | Editorial | Glam",
+      "Expert Bridal & Party Makeup",
+      "Book Now for a Glamorous Makeover"
+    ];
+
+    let index = 0;
+
+    setInterval(() => {
+      slides.forEach(slide => slide.classList.remove('active'));
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+      document.getElementById('hero-title').textContent = titles[index];
+      document.getElementById('hero-subtitle').textContent = subtitles[index];
+    }, 4000);
+  </script>
+</body>
+</html>
